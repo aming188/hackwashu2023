@@ -6,7 +6,6 @@ const jwt = require('jsonwebtoken');
 export async function POST(req: Request) {
     const data = await req.json();
     const token = await req.headers;
-
     //user info
     const email = data.email;
     const userFirstName = data.firstName;
@@ -25,6 +24,6 @@ export async function POST(req: Request) {
         console.log("User Created");
         return NextResponse.json({token: token, accountCreated: true, success: true})
     } catch (error: any) {
-        return NextResponse.json({token: token, accountCreated: false, success: false, message: error.message, code: error.code})
+        return NextResponse.json({accountCreated: false, success: false, message: error.message, code: error.code})
     }
 }

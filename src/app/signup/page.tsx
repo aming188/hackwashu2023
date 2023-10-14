@@ -1,12 +1,13 @@
 'use client';
 import Link from "next/link";
 import { useState } from 'react'
+import { useRouter } from "next/router";
 const jwt = require('jsonwebtoken')
 const jwt_key = "fijwfijweoewfiwjecmjpivjwpof"
 
-
 export default function SignUpHome() {
     const [formData, setFormData] = useState({firstName: '', lastName: '', email: '', password: ''});
+    
     const handleSubmit = async () => {
         const authToken = jwt.sign(formData.email, jwt_key);
         try {
@@ -18,16 +19,18 @@ export default function SignUpHome() {
                 },
                 body: JSON.stringify(formData)
             })
-            if(createUser.ok) {
-                console.log("User Successfully Created")
-                const data = await createUser.json();
-            } else {
-                console.log("Error Creating User")
+            const data = await createUser.json();
+            const router = useRouter()
+            if(data.accountCreated) {
+                router.push({
+                    pathname: '../../landingpage',
+                    query: {token: data.token}
+                })
             }
+            console.log("account created issue");
         } catch(error) {
             console.log("Fetch Issue");
         }
-        // setFormData({firstName: '', lastName: '', email: '', password: ''});
     }
 
     const handleInputChange = (e: any) => {
@@ -78,9 +81,9 @@ export default function SignUpHome() {
                     </button>
                 </form>
             </div>
-            <div>
+            <div className = 'flex justify-center'>
                 <Link href="/">
-                    <button>
+                    <button className = 'max-w-sm mx-auto mt-8 p-4 bg-white shadow-lg rounded'>
                         Home
                     </button>
                 </Link>
