@@ -1,35 +1,32 @@
 'use client';
 import Link from "next/link";
 import { useState } from 'react'
-import { useRouter } from "next/router";
 const jwt = require('jsonwebtoken')
 const jwt_key = "fijwfijweoewfiwjecmjpivjwpof"
+import Cookies from "js-cookie";
 
 export default function SignUpHome() {
     const [formData, setFormData] = useState({firstName: '', lastName: '', email: '', password: ''});
     
     const handleSubmit = async () => {
-        const authToken = jwt.sign(formData.email, jwt_key);
         try {
-            const createUser = await fetch('/api/signupform', {
+            const response = await fetch('/api/signupform', {
                 method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer {authToken}'
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(formData)
             })
-            const data = await createUser.json();
-            const router = useRouter()
+            const data = await response.json();
+            const token = data.token;
+            console.log(token)
             if(data.accountCreated) {
-                router.push({
-                    pathname: '../../landingpage',
-                    query: {token: data.token}
-                })
+                console.log("success")
+                Cookies.set("token", token)
+                window.location.href= ".../../landingpage"
             }
-            console.log("account created issue");
         } catch(error) {
-            console.log("Fetch Issue");
+            console.log(error);
         }
     }
 
