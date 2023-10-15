@@ -41,6 +41,13 @@ const LandingPage = () => {
           </button> 
         </Link> 
     </div>
+    <div className='flex justify-end'>
+       <Link href='/'>
+          <button className='border border-gray-500 hover:border-gray-700 text-gray-700 hover:text-gray-900 font-bold py-2 px-4 rounded'>
+            Logout
+          </button> 
+        </Link> 
+    </div>
     </>
   );
 };

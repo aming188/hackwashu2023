@@ -1,5 +1,6 @@
 'use client';
 import Link from "next/link";
+<<<<<<< HEAD
 import React, { useState } from 'react'
 import Cookies from 'js-cookie'
 
@@ -7,8 +8,15 @@ export default function TransactionsHome() {
     const email = Cookies.get("token")
     console.log(email)
     const [formData, setFormData] = useState({email: {email}, expense:'', description:'', groupName:''});
+=======
+import { useState } from 'react'
+
+export default function TransactionsHome() {
+    const [formData, setFormData] = useState({expense:0, description:'', groupName:''});
+>>>>>>> 3e245ace1dfecace19db6f58d839efd3d63c557f
     
-    const handleSubmit = async () => {
+    const handleSubmit = async (e: any) => {
+        e.preventDefault()
         try {
             const response = await fetch('/api/transactionform', {
                 method: "POST",
@@ -18,6 +26,9 @@ export default function TransactionsHome() {
                 body: JSON.stringify(formData)
             })
             const data = await response.json();
+            console.log("Expense: " + data.expense)
+            console.log("Description: " + data.description)
+            console.log("Group name: " + data.groupName)
             if(data.expenseAdded) {
                 console.log("success")
                 window.location.href= ".../../landingpage"
@@ -33,7 +44,7 @@ export default function TransactionsHome() {
     const handleInputChange = (e: any) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
-      };
+    };
     
     return (
         <>
@@ -69,7 +80,7 @@ export default function TransactionsHome() {
                 </form>
             </div>
             <div className = 'flex justify-center'>
-                <Link href="/">
+                <Link href="/landingpage">
                     <button className = 'max-w-sm mx-auto mt-8 p-4 bg-white shadow-lg rounded'>
                         Home
                     </button>
@@ -78,80 +89,3 @@ export default function TransactionsHome() {
         </>
     )
 }
-
-
-
-
-
-
-
-
-
-
-
-// 'use client';
-// import Link from "next/link";
-// import { prisma } from "@/db"
-
-// async function createExpense(data: FormData){
-//     const expense = data.get("expense")?.valueOf()
-//     const description = data.get("description")?.valueOf()
-//     const groupName = data.get("groupName")?.valueOf()
-//     if( typeof expense !== "string"){
-//          throw new Error("invalid expense")
-//     }
-//     await prisma.expenses.create({data: {expense: expense as string, description: description as string, groupName: groupName as string}})
-//     console.log("new expense")
-//     window.location.href= ".../landingpage"
-// }
-
-// export default function transactionsHome(){
-//     return (
-//         <>
-//             <header>
-//                 <h1 className="flex justify-center">
-//                     Add Expense
-//                 </h1>
-//             </header>
-
-//             <div>
-//                 <form action={createExpense} className = "flex gap-2 flex-col">
-//                     <input 
-//                         type = "text"
-//                         placeholder = "Enter amount" 
-//                         name = "expense"
-//                         className="border bg-transparent rounded px-1 py-1 outline-none"
-//                         required>
-//                     </input>
-//                     <input 
-//                         type = "text" 
-//                         placeholder = "Enter a description" 
-//                         name = "description"
-//                         className="border bg-transparent rounded px-1 py-1 outline-none"
-//                         required>
-//                     </input>
-//                     <input 
-//                         type = "text" 
-//                         placeholder = "Enter group name" 
-//                         name = "groupName"
-//                         className="border bg-transparent rounded px-1 py-1 outline-none"
-//                         required>
-//                     </input>
-//                     <div className="flex gap-1 justify-end">
-//                         <button type="submit" className="border px-1 py-1 rounded outline-none">
-//                             Submit
-//                         </button>
-//                     </div>
-//                 </form>
-//             </div>
-
-//             <div>
-//                 <Link href="/">
-//                     <button>
-//                         Home
-//                     </button>
-//                 </Link>
-//             </div>
-//         </>
-//     )
-// }
