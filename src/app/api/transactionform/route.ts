@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 export async function POST(req: Request) {
     const data = await req.json();
     
-    const expense1 = data.expense;
+    const expense1 = parseFloat(data.expense);
     const description1 = data.description;
     const groupName1 = data.groupName;
     console.log("Expense: " + expense1)

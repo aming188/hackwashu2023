@@ -25,7 +25,7 @@ export default function LoginHome() {
                 Cookies.set("token", token)
                 window.location.href= ".../../landingpage"
             }
-            else{
+            else {
                 console.log("Login failed: ", data.message)
             }
         } catch(error) {

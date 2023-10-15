@@ -15,9 +15,9 @@ export async function POST(req: Request) {
     let noResponse;
     console.log("Email: " + email + ", Password: " + passGuess);
     try {
-        userMatch = await prisma.user.findUnique({
+        userMatch = await prisma.user.findFirst({
             where: {
-                email:email,
+                email: email,
             },
             select: {
                 id: true,
