@@ -8,7 +8,8 @@ import Cookies from "js-cookie";
 export default function LoginHome() {
     const [formData, setFormData] = useState({email: '', password: ''});
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e: any) => {
+        e.preventDefault();
         try {
             const response = await fetch('/api/loginform', {
                 method: "POST",

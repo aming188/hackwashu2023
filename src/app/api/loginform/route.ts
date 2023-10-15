@@ -12,7 +12,6 @@ export async function POST(req: Request) {
     const passGuess = data.password;
 
     let userMatch;
-    let noResponse;
     console.log("Email: " + email + ", Password: " + passGuess);
     try {
         userMatch = await prisma.user.findFirst({
