@@ -10,12 +10,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User { 
-  id String @id @default (uuid())
-  email String 
-  password String
-  firstName String
-  lastName String
+model User {
+  id              String  @id @default(uuid())
+  email           String
+  password        String
+  firstName       String
+  lastName        String
+  Groups          Groups[]
 }
 
+model Groups {
+  groupName String     @id @unique
+  users     User[]
+  expenses  Expenses[]
+}
 
+model Expenses {
+  expenseId   Int      @id @default(autoincrement())
+  expense     Float
+  description String
+  dateTime    DateTime @default(now())
+  group       Groups   @relation(fields: [groupName], references: [groupName])
+  groupName   String
+}
