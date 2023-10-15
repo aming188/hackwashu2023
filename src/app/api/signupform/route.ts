@@ -15,8 +15,8 @@ export async function POST(req: Request) {
     const password = data.password;
     console.log("Email: " + email + ", Password: " + password);
     try {
-        const userMatch = await prisma.user.create({
-            data: {
+        const userMatch = await prisma.user.create({ 
+            data: { 
                 email: email,
                 firstName: userFirstName,
                 lastName: userLastName,

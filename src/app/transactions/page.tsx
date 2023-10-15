@@ -12,8 +12,7 @@ export default function TransactionsHome() {
 import { useState } from 'react'
 
 export default function TransactionsHome() {
-    const [formData, setFormData] = useState({expense:0, description:'', groupName:''});
->>>>>>> 3e245ace1dfecace19db6f58d839efd3d63c557f
+    const [formData, setFormData] = useState({expense:'', description:'', groupName:''});
     
     const handleSubmit = async (e: any) => {
         e.preventDefault()
@@ -24,7 +23,8 @@ export default function TransactionsHome() {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(formData)
-            })
+    
+        })
             const data = await response.json();
             console.log("Expense: " + data.expense)
             console.log("Description: " + data.description)

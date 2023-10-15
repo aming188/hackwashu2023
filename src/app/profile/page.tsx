@@ -3,13 +3,13 @@ import Link from "next/link";
 import { useState, useEffect } from 'react'
 import Cookies from 'js-cookie'
 
-export default function profileHome(){
+export default function ProfileHome(){
     const [tokenVal, setTokenVal] = useState('')
     const [userEmail, setUserEmail] = useState('')
     const [userFirst, setUserFirst] = useState('')
     const [userLast, setUserLast] = useState('')
     const getInfo = async () => {
-        console.log("EMAIL TOKEN: ", tokenVal)
+        
         try {
             const response = await fetch('/api/getUserInfo', {
                 method: "POST",
