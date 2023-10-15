@@ -1,11 +1,36 @@
 'use client';
 import Link from "next/link";
 import { useState } from 'react'
+const jwt = require('jsonwebtoken')
+const jwt_key = "fijwfijweoewfiwjecmjpivjwpof"
+import Cookies from "js-cookie";
 
 export default function LoginHome() {
     const [formData, setFormData] = useState({email: '', password: ''});
+
     const handleSubmit = async () => {
-        setFormData({email: '', password: ''});
+        try {
+            const response = await fetch('/api/loginform', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            const data = await response.json();
+            const token = data.token;
+            console.log(token)
+            if(data.loggedIn) {
+                console.log("Login success")
+                Cookies.set("token", token)
+                window.location.href= ".../../landingpage"
+            }
+            else{
+                console.log("Login failed: ", data.message)
+            }
+        } catch(error) {
+            console.log(error);
+        }
     }
 
     const handleInputChange = (e: any) => {

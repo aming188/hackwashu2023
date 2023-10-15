@@ -7,30 +7,35 @@ const jwt = require('jsonwebtoken');
 
 
 export async function POST(req: Request) {
-    const data = await req.json();
-    const username = data.username;
+    const data = await req.json(); 
+    const email = data.email;
     const passGuess = data.password;
 
     let userMatch;
     let noResponse;
-    console.log("Username: " + username + ", Password: " + passGuess);
+    console.log("Email: " + email + ", Password: " + passGuess);
     try {
-        userMatch = await prisma.profile.findFirstOrThrow({
+        userMatch = await prisma.user.findUnique({
             where: {
-                OR: [
-                    {
-                        profileUsername: username
-                    },
-                    {
-                        profileEmail: username
-                    }
-                ]
+                email:email,
             },
             select: {
-                profileId: true,
-                profilePassword: true
+                id: true,
+                firstName: true,
+                password: true
             }
         })
+        if(!userMatch){
+            return NextResponse.json({loggedIn:false, message: 'User not found'})
+        }
+
+        if(passGuess === userMatch.password){
+            return NextResponse.json({token: userMatch.firstName, loggedIn: true})
+        }
+        else{
+            return NextResponse.json({loggedIn:false, message: 'Incorrect password'})
+        }
+
     } catch (error: any) {
         return NextResponse.json({loggedIn: false, message: error.message, code: error.code})
     }
