@@ -24,7 +24,7 @@ export async function POST(req: Request) {
             },
         })
         console.log("User Created");
-        return NextResponse.json({token: userFirstName, accountCreated: true, success: true})
+        return NextResponse.json({token: email, accountCreated: true, success: true})
     } catch (error: any) {
         return NextResponse.json({accountCreated: false, success: false, message: error.message, code: error.code})
     }

@@ -1,9 +1,12 @@
 'use client';
 import Link from "next/link";
 import React, { useState } from 'react'
+import Cookies from 'js-cookie'
 
 export default function TransactionsHome() {
-    const [formData, setFormData] = useState({expense:'', description:'', groupName:''});
+    const email = Cookies.get("token")
+    console.log(email)
+    const [formData, setFormData] = useState({email: {email}, expense:'', description:'', groupName:''});
     
     const handleSubmit = async () => {
         try {

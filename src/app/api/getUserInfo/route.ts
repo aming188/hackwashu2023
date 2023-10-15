@@ -6,8 +6,9 @@ const jwt = require('jsonwebtoken');
 
 export async function POST(req: Request) {
     const data = await req.json();
+    console.log(data.email)
     //user info
-    const email = data.email;
+    const email = data
     console.log("Email: " + email);
     try {
         const findUser = await prisma.user.findFirst({

@@ -18,19 +18,19 @@ export async function POST(req: Request) {
         userMatch = await prisma.user.findFirst({
             where: {
                 email: email,
+                password: passGuess
             },
-            select: {
-                id: true,
-                firstName: true,
-                password: true
-            }
+            // select: {
+            //     id: true,
+            //     firstName: true,
+            //     password: true
+            // }
         })
         if(!userMatch){
             return NextResponse.json({loggedIn:false, message: 'User not found'})
         }
-
         if(passGuess === userMatch.password){
-            return NextResponse.json({token: userMatch.firstName, loggedIn: true})
+            return NextResponse.json({token: userMatch.email, loggedIn: true})
         }
         else{
             return NextResponse.json({loggedIn:false, message: 'Incorrect password'})

@@ -9,6 +9,7 @@ export default function profileHome(){
     const [userFirst, setUserFirst] = useState('')
     const [userLast, setUserLast] = useState('')
     const getInfo = async () => {
+        console.log("EMAIL TOKEN: ", tokenVal)
         try {
             const response = await fetch('/api/getUserInfo', {
                 method: "POST",
@@ -42,8 +43,8 @@ export default function profileHome(){
         } else {
             console.log("INVALID TOKEN")
         }
-        getInfo()
     }, []);
+    getInfo()
     return (
         <>
             <header>
